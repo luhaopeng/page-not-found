@@ -4,32 +4,32 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/luhaopeng/page-not-found/blob/master/LICENSE)
 
-A collection of components for 404 pages. **No dependencies**
+A collection of components for 404 pages. **No dependencies**.
 
 ## Quick Start
 
 1. Include `pnf.min.js` in your page.
 
 ```html
-  <script src="pnf.min.js"></script>
+<script src="pnf.min.js"></script>
 ```
 
 2. Choose your container.
 
 ```html
-  <div class="pnf-container"></div>
+<div class="pnf-container"></div>
 ```
 
 3. Initialize with `PnF`.
 ```javascript
-  PnF.fragment('.pnf-container')
+PnF.fragment('.pnf-container')
 ```
 
 ## API
 
 ### .fragment(selector, options)
 
-[Demo](TBD)
+[Demo](https://luhaopeng.github.io/page-not-found/example/fragment.html)
 
 #### options
 
@@ -51,58 +51,58 @@ Option | Type | Default | Description
 Generated HTML markup is displayed below. You may style it any way you'd like.
 
 ```html
-  <div class="fragment-container">
-    <div class="fragment-layer-1">
-      <div class="fragment"></div>
-      <div class="fragment"></div>
-    </div>
-    <div class="fragment-layer-2">
-      <div class="fragment"></div>
-      <div class="fragment"></div>
-    </div>
-    <div class="fragment-layer-3">
-      <div class="fragment"></div>
-      <div class="fragment"></div>
-    </div>
+<div class="fragment-container">
+  <div class="fragment-layer-1">
+    <div class="fragment"></div>
+    <div class="fragment"></div>
   </div>
+  <div class="fragment-layer-2">
+    <div class="fragment"></div>
+    <div class="fragment"></div>
+  </div>
+  <div class="fragment-layer-3">
+    <div class="fragment"></div>
+    <div class="fragment"></div>
+  </div>
+</div>
 ```
 
 Style sample:
 
 ```css
-  body {
-    margin: 0;
-  }
-  .fragment-container {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-  }
-  .fragment-container div[class*="fragment-layer-"] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transition: 0.1s;
-  }
-  .fragment-container .fragment-layer-1 .fragment {
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    font-size: 18px;
-    color: #fff;
-  }
-  .fragment-container .fragment-layer-2 .fragment {
-    width: 20px;
-    height: 20px;
-  }
-  .fragment-container .fragment-layer-3 .fragment {
-    width: 10px;
-    height: 10px;
-  }
+body {
+  margin: 0;
+}
+.fragment-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+.fragment-container div[class*="fragment-layer-"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.1s;
+}
+.fragment-container .fragment-layer-1 .fragment {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 18px;
+  color: #fff;
+}
+.fragment-container .fragment-layer-2 .fragment {
+  width: 20px;
+  height: 20px;
+}
+.fragment-container .fragment-layer-3 .fragment {
+  width: 10px;
+  height: 10px;
+}
 ```
 
 ## LICENSE
