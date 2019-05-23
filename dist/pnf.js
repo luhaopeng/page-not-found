@@ -7,9 +7,11 @@
     fragment: function fragment(selector, options) {
       var defaultOptions = {
         maxRotate: 120,
+        homeUrl: '',
+        homeLabel: 'Home',
         layers: [{
           offset: 50,
-          fragments: '页面不存在'.split(''),
+          fragments: 'Page Not Found'.split(' '),
           color: 'palevioletred'
         }, {
           offset: 25,
@@ -23,7 +25,17 @@
       };
       options = Object.assign(defaultOptions, options);
       var $container = document.querySelector(selector);
-      $container.classList.add('fragment-container');
+      $container.classList.add('fragment-container'); // link
+
+      if (options.homeUrl) {
+        var $link = document.createElement('a');
+        $link.className = "fragment-home";
+        $link.href = options.homeUrl;
+        $link.style.setProperty('z-index', 200);
+        $link.innerText = options.homeLabel;
+        $container.appendChild($link);
+      }
+
       options.layers.map(function (layer, idx) {
         // init layer
         var $div = document.createElement('div');

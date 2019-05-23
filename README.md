@@ -35,7 +35,9 @@ PnF.fragment('.pnf-container')
 
 Option | Type | Default | Description
 -------|:----:|:-------:|---
-`maxRotate` | `number` | 120 | Fragment rotation. Will rotate between `-maxRotate / 2` to `maxRotate / 2`.
+`homeUrl` | `string` | `null` | Url to homepage.
+`homeLabel` | `string` | `'Home'` | Label text for link button.
+`maxRotate` | `number` | `120` | Fragment rotation. Will rotate between `-maxRotate / 2` to `maxRotate / 2`.
 `layers` | `[layer]` | _miscellaneous_ | Layer objects array. See below.
 
 #### layer
@@ -87,11 +89,31 @@ body {
   bottom: 0;
   transition: 0.1s;
 }
+.fragment-container .fragment-home {
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  outline: 0;
+  box-shadow: 0px 0px 16px 0px rgba(24, 144, 255, 0.3);
+  background-color: rgba(24, 144, 255, 0.6);
+  padding: 12px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 50vh auto 0;
+  display: block;
+  width: max-content;
+  text-decoration: none;
+  position: relative;
+  transition: linear 0.2s;
+}
+.fragment-container .fragment-home:hover {
+  box-shadow: 0px 0px 16px 0px rgba(24, 144, 255, 0.7);
+  background-color: rgba(24, 144, 255, 0.95);
+}
 .fragment-container .fragment-layer-1 .fragment {
-  width: 40px;
-  height: 40px;
   text-align: center;
-  line-height: 40px;
+  line-height: 1.5;
+  padding: 5px 10px;
   font-size: 18px;
   color: #fff;
 }
@@ -104,6 +126,10 @@ body {
   height: 10px;
 }
 ```
+
+## TODO
+
+- [ ] Locate text layer fragments from left to right. Currently it's totally random.
 
 ## LICENSE
 

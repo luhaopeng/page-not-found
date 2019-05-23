@@ -3,10 +3,12 @@
     fragment(selector, options) {
       const defaultOptions = {
         maxRotate: 120,
+        homeUrl: '',
+        homeLabel: 'Home',
         layers: [
           {
             offset: 50,
-            fragments: '页面不存在'.split(''),
+            fragments: 'Page Not Found'.split(' '),
             color: 'palevioletred'
           },
           { offset: 25, fragments: 35, color: 'burlywood' },
@@ -17,6 +19,15 @@
       options = Object.assign(defaultOptions, options)
       let $container = document.querySelector(selector)
       $container.classList.add('fragment-container')
+      // link
+      if (options.homeUrl) {
+        let $link = document.createElement('a')
+        $link.className = `fragment-home`
+        $link.href = options.homeUrl
+        $link.style.setProperty('z-index', 200)
+        $link.innerText = options.homeLabel
+        $container.appendChild($link)
+      }
 
       options.layers.map((layer, idx) => {
         // init layer
