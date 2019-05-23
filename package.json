@@ -1,0 +1,16 @@
+{
+  "name": "page-not-found",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "babel src -d dist/",
+    "build": "uglifyjs dist/pnf.js -o dist/pnf.min.js -c -m"
+  },
+  "author": "luhaopeng",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5"
+  }
+}
