@@ -54,6 +54,7 @@ Generated HTML markup is displayed below. You may style it any way you'd like.
 
 ```html
 <div class="fragment-container">
+  <a class="fragment-home">...</a>
   <div class="fragment-layer-1">
     <div class="fragment"></div>
     <div class="fragment"></div>
