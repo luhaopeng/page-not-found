@@ -1,6 +1,7 @@
 ;(function(local) {
   let PnF = {
     fragment(selector, options) {
+      let needRAF = true
       const defaultOptions = {
         maxRotate: 120,
         homeUrl: '',
@@ -16,7 +17,7 @@
         ]
       }
 
-      options = Object.assign(defaultOptions, options)
+      options = Object.assign({}, defaultOptions, options)
       let $container = document.querySelector(selector)
       $container.classList.add('fragment-container')
       // link
@@ -29,11 +30,10 @@
         $container.appendChild($link)
       }
 
-      options.layers.map((layer, idx) => {
+      let $layers = options.layers.map((layer, idx) => {
         // init layer
         let $div = document.createElement('div')
         $div.className = `fragment-layer-${idx + 1}`
-        $div.setAttribute('data-offset', layer.offset)
         $div.style.setProperty('--bg-color', layer.color)
         $div.style.setProperty('z-index', 100 - idx)
         $container.appendChild($div)
@@ -51,22 +51,30 @@
             $div.appendChild($fragment)
           }
         }
+        return $div
       })
 
+      let w = local.innerWidth
+      let h = local.innerHeight
+      local.onresize = function resize() {
+        w = local.innerWidth
+        h = local.innerHeight
+      }
       local.addEventListener('mousemove', e => {
-        let w = e.currentTarget.innerWidth
-        let h = e.currentTarget.innerHeight
-        let offsetX = 0.5 - e.pageX / w
-        let offsetY = 0.5 - e.pageY / h
-        let $layers = document.querySelectorAll('div[class*="fragment-layer-"')
-        Array.from($layers).map($layer => {
-          let offset = $layer.getAttribute('data-offset')
-          let transform = `
-            translateX(${offsetX * offset}px)
-            translateY(${offsetY * offset}px)
-          `
-          $layer.style.setProperty('transform', transform)
-        })
+        let offsetX = 0.5 - e.clientX / w
+        let offsetY = 0.5 - e.clientY / h
+        if (needRAF) {
+          needRAF = false
+          local.requestAnimationFrame(function update() {
+            $layers.forEach(($layer, idx) => {
+              let offset = options.layers[idx].offset
+              // prettier-ignore
+              let transform = `translate3d(${offsetX * offset}px, ${offsetY * offset}px, 0)`
+              $layer.style.transform = transform
+            })
+            needRAF = true
+          })
+        }
       })
 
       function createFragment(w, h, r, str) {

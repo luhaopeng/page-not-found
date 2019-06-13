@@ -5,6 +5,7 @@
 (function (local) {
   var PnF = {
     fragment: function fragment(selector, options) {
+      var needRAF = true;
       var defaultOptions = {
         maxRotate: 120,
         homeUrl: '',
@@ -23,7 +24,7 @@
           color: 'powderblue'
         }]
       };
-      options = Object.assign(defaultOptions, options);
+      options = Object.assign({}, defaultOptions, options);
       var $container = document.querySelector(selector);
       $container.classList.add('fragment-container'); // link
 
@@ -36,11 +37,10 @@
         $container.appendChild($link);
       }
 
-      options.layers.map(function (layer, idx) {
+      var $layers = options.layers.map(function (layer, idx) {
         // init layer
         var $div = document.createElement('div');
         $div.className = "fragment-layer-".concat(idx + 1);
-        $div.setAttribute('data-offset', layer.offset);
         $div.style.setProperty('--bg-color', layer.color);
         $div.style.setProperty('z-index', 100 - idx);
         $container.appendChild($div); // init fragments
@@ -59,18 +59,33 @@
             $div.appendChild($fragment);
           }
         }
+
+        return $div;
       });
+      var w = local.innerWidth;
+      var h = local.innerHeight;
+
+      local.onresize = function resize() {
+        w = local.innerWidth;
+        h = local.innerHeight;
+      };
+
       local.addEventListener('mousemove', function (e) {
-        var w = e.currentTarget.innerWidth;
-        var h = e.currentTarget.innerHeight;
-        var offsetX = 0.5 - e.pageX / w;
-        var offsetY = 0.5 - e.pageY / h;
-        var $layers = document.querySelectorAll('div[class*="fragment-layer-"');
-        Array.from($layers).map(function ($layer) {
-          var offset = $layer.getAttribute('data-offset');
-          var transform = "\n            translateX(".concat(offsetX * offset, "px)\n            translateY(").concat(offsetY * offset, "px)\n          ");
-          $layer.style.setProperty('transform', transform);
-        });
+        var offsetX = 0.5 - e.clientX / w;
+        var offsetY = 0.5 - e.clientY / h;
+
+        if (needRAF) {
+          needRAF = false;
+          local.requestAnimationFrame(function update() {
+            $layers.forEach(function ($layer, idx) {
+              var offset = options.layers[idx].offset; // prettier-ignore
+
+              var transform = "translate3d(".concat(offsetX * offset, "px, ").concat(offsetY * offset, "px, 0)");
+              $layer.style.transform = transform;
+            });
+            needRAF = true;
+          });
+        }
       });
 
       function createFragment(w, h, r, str) {
